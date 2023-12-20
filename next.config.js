@@ -1,4 +1,22 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const path = require("path");
 
-module.exports = nextConfig
+const nextConfig = {
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(glb|gltf)$/,
+      use: [
+        {
+          loader: "file-loader",
+          options: {
+            outputPath: "static/assets/", // Adjust the output path as needed
+          },
+        },
+      ],
+    });
+
+    return config;
+  },
+};
+
+module.exports = nextConfig;
