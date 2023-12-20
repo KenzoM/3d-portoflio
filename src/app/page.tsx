@@ -1,11 +1,10 @@
 "use client";
-
 import React, { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import Loader from "@/components/Loader";
 import { Island } from "@/app/models/Island";
 import Sky from "@/app/models/Sky";
-import Bird from "@/app/models/Bird";
+// import Bird from "@/app/models/Bird";
 import Plane from "@/app/models/Plane";
 import HomeInfo from "@/components/HomeInfo";
 
@@ -63,8 +62,7 @@ const App = () => {
           <directionalLight position={[1, 1, 1]} intensity={2} />
           <ambientLight intensity={0.2} />
           <hemisphereLight groundColor={"#000000"} intensity={1} />
-          <Bird />
-          <Sky isRotating={isRotating} />
+          <Sky />
           <Island
             position={isLandPosition}
             scale={isLandScale}
