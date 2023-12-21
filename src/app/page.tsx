@@ -1,6 +1,7 @@
 "use client";
 import React, { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
 import Loader from "@/components/Loader";
 import { Island } from "@/app/models/Island";
 import Sky from "@/app/models/Sky";
@@ -46,9 +47,6 @@ const App = () => {
 
   return (
     <section className="w-full h-screen relative">
-      <div className="flex justify-center items-center absolute top-28 left-0 right-0 z-10">
-        {currentStage && <HomeInfo currentStage={currentStage} />}
-      </div>
       <Canvas
         className={`bg-transparent w-full h-screen ${
           isRotating ? "cursor-grabbing" : "cursor-grab"
@@ -59,6 +57,11 @@ const App = () => {
         }}
       >
         <Suspense fallback={<Loader />}>
+          <Html wrapperClass="banner-info" style={{ position: "unset" }}>
+            <div className="flex justify-center items-center absolute top-28 left-0 right-0 z-10">
+              {currentStage && <HomeInfo currentStage={currentStage} />}
+            </div>
+          </Html>
           <directionalLight position={[1, 1, 1]} intensity={2} />
           <ambientLight intensity={0.2} />
           <hemisphereLight groundColor={"#000000"} intensity={1} />
