@@ -116,6 +116,9 @@ export function Island({
 
         // Set the current stage based on the island's orientation
         switch (true) {
+          case normalizedRotation >= 6.0 && normalizedRotation <= 6.3:
+            setCurrentStage(5);
+            break;
           case normalizedRotation >= 5.45 && normalizedRotation <= 5.85:
             setCurrentStage(4);
             break;

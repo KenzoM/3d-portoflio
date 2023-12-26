@@ -38,10 +38,7 @@ export default function Modal({ open, onClose, children }: ModalProps) {
               {children}
               <button
                 className="px-4 py-2 bg-blue-500 text-white rounded"
-                onClick={() => {
-                  console.log("all do it");
-                  onClose();
-                }}
+                onClick={onClose}
               >
                 Close
               </button>

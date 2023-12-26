@@ -5,11 +5,10 @@ import Modal from "@/components/Modal";
 
 interface InfoBoxProps {
   text: string;
-  link: string;
   btnText: string;
 }
 
-const InfoBox = ({ text, link, btnText }: InfoBoxProps) => {
+const InfoBox = ({ text, btnText }: InfoBoxProps) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="info-box">
@@ -27,7 +26,7 @@ const InfoBox = ({ text, link, btnText }: InfoBoxProps) => {
     </div>
   );
 };
-const renderContent: { [key: number]: JSX.Element } = {
+export const renderContent: { [key: number]: JSX.Element } = {
   1: (
     <h1 className="sm:text-xl sm:leading-snug text-center neo-brutalism-blue py-4 px-8 text-white mx-5">
       <span className="font-semibold"> Hello this is Kenzo</span>
@@ -37,24 +36,11 @@ const renderContent: { [key: number]: JSX.Element } = {
   2: (
     <InfoBox
       text="Worked with many companies and like learningn ew stuff"
-      link="/about"
       btnText={"Learn about me"}
     />
   ),
-  3: (
-    <InfoBox
-      text="These are my projects"
-      link="/projects"
-      btnText={"Projects"}
-    />
-  ),
-  4: (
-    <InfoBox
-      text="Worked with many companies and like learningn ew stuff"
-      link="/contact"
-      btnText={"Lets talk"}
-    />
-  ),
+  3: <InfoBox text="These are my projects" btnText={"Projects"} />,
+  4: <InfoBox text="My Blog" btnText={"Blogggs"} />,
 };
 
 interface HomeInfoProps {
