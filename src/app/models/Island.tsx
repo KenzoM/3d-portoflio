@@ -6,11 +6,12 @@ Source: https://sketchfab.com/3d-models/foxs-islands-163b68e09fcc47618450150be77
 Title: Fox's islands
 */
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { a } from "@react-spring/three";
+import { a, animated } from "@react-spring/three";
 import islandScene from "@/assets/3d/island.glb";
+
 interface IslandProps {
   position?: number[];
   rotation?: number[];
@@ -35,53 +36,74 @@ export function Island({
   const rotationSpeed = useRef(0);
   const dampingFactor = 0.95;
 
-  const handlePointerDown = (e: PointerEvent | TouchEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setIsRotating(true);
+  const handlePointerDown = useCallback(
+    (e: PointerEvent | TouchEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      setIsRotating(true);
 
-    const clientX = e?.touches ? e.touches[0].clientX : e.clientX;
-
-    lastX.current = clientX;
-  };
-  const handlePointerUp = (e: PointerEvent | TouchEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setIsRotating(false);
-  };
-  const handlePointerMove = (e: PointerEvent | TouchEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (isRotating && isLandRef.current) {
-      const clientX = e?.touches ? e.touches[0].clientX : e.clientX;
-
-      const delta = (clientX - lastX.current) / viewport.width;
-
-      isLandRef.current.rotation.y += delta * 0.01 * Math.PI;
+      const clientX = (e as TouchEvent)?.touches
+        ? (e as TouchEvent).touches[0].clientX
+        : (e as PointerEvent).clientX;
 
       lastX.current = clientX;
-      rotationSpeed.current = delta * 0.01 * Math.PI;
-    }
-  };
+    },
+    [setIsRotating]
+  );
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (isLandRef.current) {
-      if (e.key === "ArrowLeft") {
-        if (!isRotating) setIsRotating(true);
-        isLandRef.current.rotation.y += 0.01 * Math.PI;
-      } else if (e.key === "ArrowRight") {
-        if (!isRotating) setIsRotating(true);
-        isLandRef.current.rotation.y -= 0.01 * Math.PI;
-      }
-    }
-  };
-
-  const handleKeyUp = (e: KeyboardEvent) => {
-    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+  const handlePointerUp = useCallback(
+    (e: PointerEvent | TouchEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
       setIsRotating(false);
-    }
-  };
+    },
+    [setIsRotating]
+  );
+
+  const handlePointerMove = useCallback(
+    (e: PointerEvent | TouchEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      if (isRotating && isLandRef.current) {
+        const clientX = (e as TouchEvent)?.touches
+          ? (e as TouchEvent).touches[0].clientX
+          : (e as PointerEvent).clientX;
+
+        const delta = (clientX - lastX.current) / viewport.width;
+
+        isLandRef.current.rotation.y += delta * 0.01 * Math.PI;
+
+        lastX.current = clientX;
+        rotationSpeed.current = delta * 0.01 * Math.PI;
+      }
+    },
+    [isRotating, viewport.width]
+  );
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (isLandRef.current) {
+        if (e.key === "ArrowLeft") {
+          if (!isRotating) setIsRotating(true);
+          isLandRef.current.rotation.y += 0.01 * Math.PI;
+        } else if (e.key === "ArrowRight") {
+          if (!isRotating) setIsRotating(true);
+          isLandRef.current.rotation.y -= 0.01 * Math.PI;
+        }
+      }
+    },
+    [isRotating, setIsRotating]
+  );
+
+  const handleKeyUp = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        setIsRotating(false);
+      }
+    },
+    [setIsRotating]
+  );
 
   useFrame(() => {
     if (isLandRef.current) {
@@ -153,7 +175,14 @@ export function Island({
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
-  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
+  }, [
+    gl,
+    handlePointerDown,
+    handlePointerUp,
+    handlePointerMove,
+    handleKeyDown,
+    handleKeyUp,
+  ]);
   return (
     <a.group {...props} ref={isLandRef}>
       <mesh
