@@ -9,13 +9,14 @@ Title: Fox's islands
 import React, { useRef, useEffect, useCallback } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { a, animated } from "@react-spring/three";
+import { a } from "@react-spring/three";
 import islandScene from "@/assets/3d/island.glb";
+import * as THREE from "three";
 
 interface IslandProps {
-  position?: number[];
+  position?: THREE.Vector3;
   rotation?: number[];
-  scale?: number[];
+  scale?: THREE.Vector3;
   isRotating: boolean;
   setIsRotating: (isRotating: boolean) => void;
   setCurrentStage: (number: number | null) => void;
@@ -59,7 +60,7 @@ export function Island({
     },
     [setIsRotating]
   );
-
+  ``;
   const handlePointerMove = useCallback(
     (e: PointerEvent | TouchEvent) => {
       e.stopPropagation();
@@ -184,6 +185,7 @@ export function Island({
     handleKeyUp,
   ]);
   return (
+    // @ts-ignore
     <a.group {...props} ref={isLandRef}>
       <mesh
         geometry={(nodes.polySurface944_tree_body_0 as THREE.Mesh).geometry}

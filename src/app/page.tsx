@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useState, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import Loader from "@/components/Loader";
@@ -8,14 +8,16 @@ import Sky from "@/app/models/Sky";
 // import Bird from "@/app/models/Bird";
 import Plane from "@/app/models/Plane";
 import HomeInfo from "@/components/HomeInfo";
+import * as THREE from "three";
 
 const App = () => {
   const [isRotating, setIsRotitating] = useState(false);
   const [currentStage, setCurrentStage] = useState<number | null>(1);
+
   const adjustIslandForScreenSize = () => {
     let screenScale = [1, 1, 1];
     let screenPosition = [0, -6.5, -43];
-    let rotation = [0.1, 4.7, 0];
+    let rotation = [0.1, 4.9, 0];
 
     if (typeof window !== "undefined") {
       if (window.innerWidth < 768) {
@@ -39,7 +41,7 @@ const App = () => {
     return [screenScale, screenPosition];
   };
 
-  const [isLandScale, isLandPosition, islandRotation] =
+  const [islandScale, islandPosition, islandRotation] =
     adjustIslandForScreenSize();
 
   const [planeScale, planePosition] = adjustPlaneForScreenSize();
@@ -66,8 +68,8 @@ const App = () => {
           <hemisphereLight groundColor={"#000000"} intensity={1} />
           <Sky />
           <Island
-            position={isLandPosition}
-            scale={isLandScale}
+            position={new THREE.Vector3(...islandPosition)}
+            scale={new THREE.Vector3(...islandScale)}
             rotation={islandRotation}
             isRotating={isRotating}
             setIsRotating={setIsRotitating}
