@@ -196,7 +196,6 @@ body:has(.card[data-color="green"]:hover) {
 /* Disable touch events for mobile devices */
 @media only screen and (max-width: 768px) {
   body {
-    /* display: none; */
     touch-action: none;
   }
 }
