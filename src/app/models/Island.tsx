@@ -20,16 +20,12 @@ interface IslandProps {
   isRotating: boolean;
   setIsRotating: (isRotating: boolean) => void;
   setCurrentStage: (number: number | null) => void;
-  // shouldRotate: boolean;
 }
 
 export function Island({
   isRotating,
   setIsRotating,
   setCurrentStage,
-  // shouldRotate,
-  // setShouldRotate,
-  // currentStage,
   ...props
 }: IslandProps) {
   const isLandRef = useRef<THREE.Group>(null);
@@ -141,19 +137,6 @@ export function Island({
       }
     }
   });
-
-  // useEffect(() => {
-  //   if (shouldRotate) {
-  //     if (isLandRef.current) {
-  //       rotationSpeed.current -= 0.2;
-  //       rotationSpeed.current *= dampingFactor;
-  //       setShouldRotate(false);
-  //       const result = ((currentStage + 1) % 3) + 1;
-
-  //       setCurrentStage(result);
-  //     }
-  //   }
-  // }, [shouldRotate, setCurrentStage, currentStage, setShouldRotate]);
 
   useEffect(() => {
     const canvas = gl.domElement;

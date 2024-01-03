@@ -7,11 +7,11 @@ const Sky = () => {
   const sky = useGLTF(skyScene);
   const skyRef = useRef<THREE.Mesh>(null);
 
-  // useFrame((_, delta) => {
-  //   if (skyRef.current) {
-  //     skyRef.current.rotation.y += 0.25 * delta;
-  //   }
-  // });
+  useFrame((_, delta) => {
+    if (skyRef.current) {
+      skyRef.current.rotation.y += delta * 0.005;
+    }
+  });
   return (
     <mesh ref={skyRef}>
       <primitive object={sky.scene} />

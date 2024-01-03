@@ -12,7 +12,6 @@ import * as THREE from "three";
 
 const App = () => {
   const [isRotating, setIsRotitating] = useState(false);
-  const [shouldRotate, setShouldRotate] = useState(false);
   const [currentStage, setCurrentStage] = useState<number | null>(1);
 
   const adjustIslandForScreenSize = () => {
@@ -62,16 +61,6 @@ const App = () => {
               {currentStage && <HomeInfo currentStage={currentStage} />}
             </div>
           </Html>
-          {/* <Html wrapperClass="banner-info" style={{ position: "unset" }}>
-            <button
-              className="bg-black text-fuchsia-600 absolute top-1/2 right-0"
-              onClick={() => {
-                setShouldRotate(true);
-              }}
-            >
-              Go right
-            </button>
-          </Html> */}
           <directionalLight position={[1, 1, 1]} intensity={2} />
           <ambientLight intensity={0.2} />
           <hemisphereLight groundColor={"#000000"} intensity={1} />
@@ -83,15 +72,12 @@ const App = () => {
             isRotating={isRotating}
             setIsRotating={setIsRotitating}
             setCurrentStage={setCurrentStage}
-            // currentStage={currentStage}
-            // shouldRotate={shouldRotate}
-            // setShouldRotate={setShouldRotate}
           />
           <Plane
             rotation={[0, 20, 0]}
             isRotating={isRotating}
-            planeScale={planeScale}
-            planePosition={planePosition}
+            scale={planeScale}
+            position={planePosition}
           />
         </Suspense>
       </Canvas>
