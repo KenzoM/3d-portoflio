@@ -33,7 +33,7 @@ export default function Modal({ open, onClose, children }: ModalProps) {
               className="absolute inset-0 bg-black opacity-50"
               onClick={onClose}
             />
-            <div className="bg-white rounded-lg p-8 max-w-4xl7 mx-auto z-10 w-10/12 h-full">
+            <div className="bg-white rounded-lg p-8 max-w-4xl7 mx-auto z-10 w-full md:w-10/12 h-full">
               <h2 className="text-2xl font-semibold mb-4">Modal Title</h2>
               {children}
               <button

@@ -33,8 +33,8 @@ export const renderContent: { [key: number]: JSX.Element } = {
       <br />A Software Engineer from Portland
     </h1>
   ),
-  2: <InfoBox text="These are my projects" btnText={"Projects"} />,
-  3: <InfoBox text="My Blog" btnText={"Blogggs"} />,
+  2: <InfoBox text="Featured Work" btnText={"View Projects"} />,
+  3: <InfoBox text="Insights & Thoughts" btnText={"Explore Blog"} />,
 };
 
 interface HomeInfoProps {

@@ -19,8 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <main className="bg-slate-300/20"></main>
-        {children}
+        <main>{children}</main>
       </body>
     </html>
   );
